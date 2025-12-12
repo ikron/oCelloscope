@@ -26,11 +26,15 @@ Then we can fir linear growth curves to the data, using the window based method
 
 `gr.res <- ocelloscope.growth.rate(longdata)`
 
-```> head(gr.res)
+Looking at the data in gr.res
+
+`> head(gr.res)`
+```
   sample        gr        R2      window tips.at.limit1
 1     A1 13529.628 0.9377004     0:15000            898
 2     A2  9371.063 0.9957154  5000:20000            263
 3     A3  2190.374 0.9915097 15000:30000             56
 4     B1 14749.068 0.9532670     0:15000            838
 5     B2  6809.822 0.9970386 10000:25000            276
-6     B3  4517.472 0.9666366 20000:35000             33 ```
+6     B3  4517.472 0.9666366 20000:35000             33
+```
