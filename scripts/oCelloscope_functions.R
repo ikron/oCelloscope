@@ -19,13 +19,17 @@ load.ocelloscope.data2 <- function(datafile, repetitions, sep, dec, features = c
     #Need to search the file for the feature names
     linebyline <- readLines(con) #Reading the file line by line
     startlines <- rep(0, length(features))
-    for(i in 1:length(features)) { startlines[i] <- ifelse(length(grep(features[i], linebyline)) > 1, grep(features[i], linebyline)[2], grep(features[i], linebyline))  }
+    start.feat.line <- grep("Features", linebyline)
+    feat.data <- linebyline[start.feat.line:length(linebyline)] #Line index to extract all features
+    for(i in 1:length(features)) { startlines[i] <- which(features[i] == feat.data) }
+        #ifelse(length(grep(features[i], feat.data)) > 1, grep(features[i], feat.data)[2], grep(features[i], feat.data))  }
     foo <- rep(list(0), 5)
     for(i in 1:5) { #Loop over the features (volume, area, no. tips, tips / area, timestamp)
-        foo[[i]] <- read.csv(file = datafile, header = T, sep = sep, dec = dec, skip = startlines[i], nrows = repetitions, fileEncoding = enc)
+        foo[[i]] <- read.csv(file = datafile, header = T, sep = sep, dec = dec, skip = start.feat.line - 1 + startlines[i], nrows = repetitions, fileEncoding = enc)
         colnames(foo[[i]])[1] <- "Time" #Fix the first column name, unit is seconds
     }
     names(foo) <- c("volume", "area", "no.tips", "tips.per.area", "timestamp")
+    close(con) #Close the connections
     return(foo) #Return results
 }
 
@@ -52,7 +56,7 @@ convert.ocelloscope.data.long <- function(inputdata) {
 #This function estimates growth rates from ocelloscope data
 #limitmatrix contains limits for the different growth rate windows (start, end)
 #default limits are length of 15000, and window is moved by 5000
-ocelloscope.growth.rate <- function(longdata, limitmatrix = matrix(c(10000, 25000, 15000, 30000, 20000, 35000, 25000, 40000, 30000, 45000, 35000, 50000, 40000, 55000, 45000, 60000), ncol = 2, byrow = T)) {
+ocelloscope.growth.rate <- function(longdata, limitmatrix = matrix(c(0, 15000, 5000, 20000, 10000, 25000, 15000, 30000, 20000, 35000, 25000, 40000, 30000, 45000, 35000, 50000, 40000, 55000, 45000, 60000), ncol = 2, byrow = T)) {
     samples <- unique(longdata$sample) #sample names
     n.samples <- length(samples) #Get number of samples
     n.windows <- nrow(limitmatrix)
@@ -81,6 +85,9 @@ ocelloscope.growth.rate <- function(longdata, limitmatrix = matrix(c(10000, 2500
         #Which limits give the best fit?
         #Which limits give the highest growth rate?
         ## Rules: first look which limits give highest R2, if multiple limits have fits where R2 > 99.9, then select that which gives the highest growth rate
+        ## Negative growth rates are ignored
+        neg.ind <- temp.gr[,1] < 0
+        if(any(neg.ind) == TRUE) { temp.gr[neg.ind,2] <- NA } #Set negative gr R2 as NA 
         max.R2.ind <- which(temp.gr[,2] == max(temp.gr[,2], na.rm = T)) #Index of max R2
         #browser()
         #print(paste("storing results for sample", samples[i], sep = " "))
