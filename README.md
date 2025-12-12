@@ -10,4 +10,4 @@ First thing to do is to export the data from the oCelloscope UniExplorer program
 
 First load the some R functions for the oCelloscope. These are in /scripts/oCelloscope_functions.R
 
-´source("oCelloscope_functions.R")´
+`source("oCelloscope_functions.R")`
