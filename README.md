@@ -12,4 +12,5 @@ First load the some R functions for the oCelloscope. These are in /scripts/oCell
 
 `source("oCelloscope_functions.R")`
 Load example data from /data
+
 `testdata <- load.ocelloscope.data2(inputfile, sep = ";", dec = ",", repetitions = 100, features = c("EstimatedVolume", "Area", "NumberOfTips", "TipsPerArea", "TimestampInSeconds"))`
