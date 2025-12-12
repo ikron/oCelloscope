@@ -38,3 +38,7 @@ Looking at the data in gr.res
 5     B2  6809.822 0.9970386 10000:25000            276
 6     B3  4517.472 0.9666366 20000:35000             33
 ```
+
+Columns are: sample = well in the oCelloscope plate, gr = slope of the linear fit, R2 = R^2^-value of the linear fit, window = window that contained the best fit, tips.at.limit1 = the number of hyphal tips at the beginning of the window. Use this value as a covariate in the analyses so that different amounts of starting conidia can be taken into account.
+
+After calculating the growth rates you need to read a sample file into R, that contains infomration what kind of sample is in each well to do further analyses.
