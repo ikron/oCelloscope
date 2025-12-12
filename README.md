@@ -8,9 +8,14 @@ First thing to do is to export the data from the oCelloscope UniExplorer program
 
 ### Tutorial
 
+Load some required libraries
+`library(tidyverse)`
+
 First load the some R functions for the oCelloscope. These are in /scripts/oCelloscope_functions.R
 
 `source("oCelloscope_functions.R")`
+
+
 
 Load example data file: "Test1_scan_areas.csv" from /data. You have to set the correct number of repetions, for your data. We use often 100 repetitions. 
 
@@ -40,5 +45,13 @@ Looking at the data in gr.res
 ```
 
 Columns are: sample = well in the oCelloscope plate, gr = slope of the linear fit, R2 = R<sup>2</sup>-value of the linear fit, window = window that contained the best fit, tips.at.limit1 = the number of hyphal tips at the beginning of the window. Use this value as a covariate in the analyses so that different amounts of starting conidia can be taken into account.
+
+One can plot the area against time using the longdata variable, Here I use vertical lines to show the window limits. For example:
+```
+ggplot(longdata, aes(x = Time, y = area, group = sample)) +
+    geom_line() +
+    geom_vline(xintercept = c(0, 15000), lty = "dashed", col = "red") +
+    ylab("Area")
+`´´
 
 After calculating the growth rates you need to read a sample file into R, that contains infomration what kind of sample is in each well to do further analyses.
