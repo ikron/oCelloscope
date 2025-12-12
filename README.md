@@ -54,4 +54,4 @@ ggplot(longdata, aes(x = Time, y = area, group = sample)) +
     ylab("Area")
 ```
 
-After calculating the growth rates you need to read a sample file into R, that contains infomration what kind of sample is in each well to do further analyses.
+After calculating the growth rates you need to read a sample file into R, that contains information what kind of sample is in each well to do further analyses.
