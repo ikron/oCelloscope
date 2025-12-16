@@ -15,7 +15,7 @@ load.ocelloscope.data <- function(datafile, start, repetitions, sep, dec) {
 
 load.ocelloscope.data2 <- function(datafile, repetitions, sep, dec, features = c("EstimatedVolume", "HyphaeArea", "NumberOfTips", "TipsPerArea", "TimestampInSeconds"), enc = "UTF-16") {
     #First get the lines where the data for the features start
-    con <- file(inputfile, encoding = enc) #File has UTF-16 encoding
+    con <- file(datafile, encoding = enc) #File has UTF-16 encoding
     #Need to search the file for the feature names
     linebyline <- readLines(con) #Reading the file line by line
     startlines <- rep(0, length(features))
