@@ -26,7 +26,7 @@ After loading the data, each well is a separate variable and different features 
 
 `longdata <- convert.ocelloscope.data.long(testdata)`
 
-Then we can fir linear growth curves to the data, using the window based method
+Then we can fit linear growth curves to the data, using the window based method
 
 `gr.res <- ocelloscope.growth.rate(longdata)`
 
