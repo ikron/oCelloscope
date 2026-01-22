@@ -87,7 +87,7 @@ ocelloscope.growth.rate <- function(longdata, limitmatrix = matrix(c(0, 15000, 5
         ## Rules: first look which limits give highest R2, if multiple limits have fits where R2 > 99.9, then select that which gives the highest growth rate
         ## Negative growth rates are ignored
         neg.ind <- temp.gr[,1] < 0
-        if(any(neg.ind) == TRUE) { temp.gr[neg.ind,2] <- NA } #Set negative gr R2 as NA 
+        if(any(neg.ind, na.rm = T) == TRUE) { temp.gr[neg.ind,2] <- NA } #Set negative gr R2 as NA 
         max.R2.ind <- which(temp.gr[,2] == max(temp.gr[,2], na.rm = T)) #Index of max R2
         #browser()
         #print(paste("storing results for sample", samples[i], sep = " "))
